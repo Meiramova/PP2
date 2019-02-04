@@ -10,16 +10,16 @@ namespace Task_4
     {
         static void Main(string[] args)
         {
-            int n = Convert.ToInt32(Console.ReadLine());
+            int n = Convert.ToInt32(Console.ReadLine());//считываю стринг, перевожу его в интовое значение
             for (int i = 0; i < n; i++)
             {
-                for (int j = 0; j <= i; j++)
+                for (int j = 0; j <= i; j++)// создаю двойной массив, чей второй индекс пробегается до первого
                 {
-                    Console.Write("[*]");
+                    Console.Write("[*]");// вывожу в этих местах звездочки, получаем прямой треугольник
                 }
-                Console.WriteLine();
+                Console.WriteLine();// чтобы с новой строки начинал
             }
-            Console.ReadKey();
+            Console.ReadKey();// чтобы терминал не закрывался
         }
     }
 }
