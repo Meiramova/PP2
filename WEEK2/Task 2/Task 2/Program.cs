@@ -23,21 +23,21 @@ namespace Task2
 
         static void Main(string[] args)
         {
-            StreamReader sr = new StreamReader("input.txt");
-            StreamWriter sw = new StreamWriter("output.txt");
-            string s = sr.ReadToEnd();
-            string[] st = s.Split();
-            int[] a = new int[st.Length];
+            StreamReader sr = new StreamReader("input.txt");  //считываем с input.txt
+            StreamWriter sw = new StreamWriter("output.txt");// ответ будет выводится тут
+            string s = sr.ReadToEnd();//считываем стринг
+            string[] st = s.Split();// разбиваем на пробелы
+            int[] a = new int[st.Length];// создаем массив из инт с размером массива из стрингов
             for (int i = 0; i < a.Length; i++)
             {
-                a[i] = int.Parse(st[i]);
+                a[i] = int.Parse(st[i]);// переводим на инт
             }
 
             for (int i = 0; i < a.Length; i++)
             {
                 if (F1(a[i]))
                 {
-                    sw.Write(a[i]);
+                    sw.Write(a[i]);// если выполняется условия, то  выведи элементы массива
                     sw.WriteLine();
 
                 }
@@ -46,7 +46,7 @@ namespace Task2
                     continue;
                 }
             }
-            sr.Close();
+            sr.Close();//закрываем поток
             sw.Close();
             Console.ReadKey();
 
