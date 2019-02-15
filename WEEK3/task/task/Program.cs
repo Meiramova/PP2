@@ -5,158 +5,183 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace _1
+namespace ConsoleApp4
 {
-    class FarManager
+    class Program
     {
-        public int cursor;
-        public int size;
-        bool ok;
-        public string path;
-        DirectoryInfo directory; // null
-        FileInfo files = null;
-        public FarManager()
+        class FarManager
         {
-            cursor = 0;
-            ok = true;
-        }
+            public DirectoryInfo papki = null;
+            public FileSystemInfo faily = null;
+            public string path;
+            public bool proverka;
+            public int cursor;
+            public int razmer;
 
-        public FarManager(string path)
-        {
-            this.path = path;
-            cursor = 0;
-            this.directory = new DirectoryInfo(path);
-            size = directory.GetFileSystemInfos().Length;
-            ok = true;
-        }
-
-
-        public void UP()
-        {
-            cursor--;
-            if (cursor < 0)
-            {
-                cursor = size - 1;
-            }
-        }
-
-        public void DOWN()
-        {
-            cursor++;
-            if (cursor == size)
+            public FarManager(string path)
             {
                 cursor = 0;
+                this.path = path;
             }
-        }
 
-
-        public void Color(FileSystemInfo fs, int i)
-        {
-            if (i == cursor)
+            public void Cvet(FileSystemInfo massive, int index)
             {
+
+                if (cursor == index)
+                {
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.BackgroundColor = ConsoleColor.DarkRed;
+                    faily = massive;
+                }
+                else if (massive.GetType() == typeof(DirectoryInfo))
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.BackgroundColor = ConsoleColor.DarkBlue;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                    Console.BackgroundColor = ConsoleColor.DarkGray;
+                }
+
+            }
+            public void Pokazhi()
+            {
+                papki = new DirectoryInfo(path);
+                FileSystemInfo[] faily = papki.GetFileSystemInfos();
                 Console.BackgroundColor = ConsoleColor.Black;
-                Console.ForegroundColor = ConsoleColor.White;
-            }
-            else if (fs.GetType() == typeof(DirectoryInfo))
-            {
-                Console.BackgroundColor = ConsoleColor.Gray;
-                Console.ForegroundColor = ConsoleColor.DarkRed;
-            }
-            else
-            {
-                Console.BackgroundColor = ConsoleColor.Magenta;
-                Console.ForegroundColor = ConsoleColor.DarkBlue;
-            }
-        }
-
-        public void Show()
-        {
-            Console.BackgroundColor = ConsoleColor.Black;
-            Console.Clear();
-            directory = new DirectoryInfo(path);
-            FileSystemInfo[] fs = directory.GetFileSystemInfos();
-            size = fs.Length;
-            for (int i = 0, k = 0; i < fs.Length; i++)
-            {
-                if (ok == false && fs[i].Name[0] == '.')
+                Console.Clear();
+                for (int i = 0, k = 0; i < faily.Length; i++)
                 {
-                    continue;
-                }
-                Color(fs[i], k);
-                Console.WriteLine(fs[i].Name);
-                k++;
-            }
-
-        }
-        public void Calcsize()
-        {
-            directory = new DirectoryInfo(path);
-            FileSystemInfo[] fs = directory.GetFileSystemInfos();
-            size = fs.Length;
-            if (!ok)
-            {
-                for (int i = 0; i < fs.Length; i++)
-                {
-                    if (fs[i].Name[0] == '.')
+                    if (faily[i].Name[0] == '.')
                     {
-                        size--;
+                        continue;
+                    }
+                    Cvet(faily[i], k);
+                    Console.WriteLine(k + 1 + ". " + faily[i].Name);
+                    k++;
+                }
+            }
+            public void Calc()
+            {
+                DirectoryInfo papki = new DirectoryInfo(path);
+                FileSystemInfo[] faily = papki.GetFileSystemInfos();
+                razmer = faily.Length;
+                for (int i = 0; i < faily.Length; i++)
+                {
+                    if (faily[i].Name[0] == '.')
+                    {
+                        razmer--;
+                    }
+                }
+            }
+
+            public void vsevyshe()
+            {
+                cursor--;
+                if (cursor < 0)
+                {
+                    cursor = razmer - 1;
+                }
+            }
+
+            public void nizhenizhe()
+            {
+                cursor++;
+                if (cursor == razmer)
+                {
+                    cursor = 0;
+                }
+            }
+            public void nachinaiyopta()
+            {
+                ConsoleKeyInfo nazhimai;
+                proverka = true;
+                while (proverka)
+                {
+                    Calc();
+                    Pokazhi();
+                    nazhimai = Console.ReadKey();
+                    if (nazhimai.Key == ConsoleKey.DownArrow)
+                    {
+                        nizhenizhe();
+                    }
+                    else if (nazhimai.Key == ConsoleKey.UpArrow)
+                    {
+                        vsevyshe();
+                    }
+                    else if (nazhimai.Key == ConsoleKey.Spacebar)
+                    {
+                        proverka = false;
+                    }
+                    else if (nazhimai.Key == ConsoleKey.Enter)
+                    {
+                        if (faily.GetType() == typeof(DirectoryInfo))
+                        {
+                            cursor = 0;
+                            path = faily.FullName;
+                        }
+                        else
+                        {
+                            StreamReader sr = new StreamReader(faily.FullName);
+                            Console.WriteLine(sr.ReadToEnd());
+                            sr.Close();
+                            Console.ReadKey();
+                            Console.Clear();
+                        }
+                    }
+                    else if (nazhimai.Key == ConsoleKey.Escape)
+                    {
+                        if (papki.Parent.FullName != @"C:\")
+                        {
+                            path = papki.Parent.FullName;
+                            cursor = 0;
+                        }
+                        else
+                        {
+                            Console.Clear();
+                            Console.WriteLine("You can not go out of the Disk");
+                            Console.ReadKey();
+
+                        }
+                    }
+                    else if (nazhimai.Key == ConsoleKey.Backspace)
+                    {
+                        if (faily.GetType() == typeof(DirectoryInfo))
+                        {
+                            cursor = 0;
+                            Directory.Delete(faily.FullName);
+                        }
+                        else
+                        {
+                            cursor = 0;
+                            File.Delete(faily.FullName);
+                        }
+                    }
+                    else if (nazhimai.Key == ConsoleKey.Tab)
+                    {
+                        Console.Clear();
+                        string nazovi = Console.ReadLine();
+                        Console.Clear();
+                        string novoe = Path.Combine(faily.FullName, nazovi);
+                        if (faily.GetType() == typeof(DirectoryInfo))
+                        {
+                            Directory.Move(faily.FullName, novoe);
+                        }
+                        else
+                        {
+                            File.Move(faily.FullName, novoe);
+                        }
                     }
                 }
             }
         }
-
-        public void Init()
+        static void Main(string[] args)
         {
-            ConsoleKeyInfo conkey = Console.ReadKey();
-            while (conkey.Key != ConsoleKey.Escape)
-            {
-                Calcsize();
-                Show();
-                conkey = Console.ReadKey();
-                if (conkey.Key == ConsoleKey.UpArrow)
-                {
-                    UP();
-                }
-                if (conkey.Key == ConsoleKey.DownArrow)
-                {
-                    DOWN();
-                }
-                if (conkey.Key == ConsoleKey.RightArrow)
-                {
-                    ok = false;
-                    cursor = 0;
-                }
-                if (conkey.Key == ConsoleKey.LeftArrow)
-                {
-                    cursor = 0;
-                    ok = true;
-                }
-                if (conkey.Key == ConsoleKey.Enter)
-                {
-                    if (files.GetType() == typeof(DirectoryInfo))
-                    {
-                        cursor = 0;
-                        path = files.FullName;
-                    }
-                }
-                if (conkey.Key == ConsoleKey.Backspace)
-                {
-                    cursor = 0;
-                    path = directory.Parent.Name;
-                }
-            }
+            string path = @"C:\Users\Зия\Desktop\study";
+            FarManager FarManager = new FarManager(path);
+            FarManager.nachinaiyopta();
 
-        }
-
-        class Program
-        {
-
-            static void Main(string[] args)
-            {
-                string path = "C:/Users/Зия/Desktop/PP2";
-                FarManager farManager = new FarManager(path);
-                farManager.Init();
-            }
         }
     }
 }
