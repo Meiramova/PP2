@@ -76,7 +76,7 @@ namespace ConsoleApp4
                 }
             }
 
-            public void vsevyshe()
+            public void vsevyshe() //пробегаемся курсором вверх
             {
                 cursor--;
                 if (cursor < 0)
@@ -85,7 +85,7 @@ namespace ConsoleApp4
                 }
             }
 
-            public void nizhenizhe()
+            public void nizhenizhe()//вниз
             {
                 cursor++;
                 if (cursor == razmer)
@@ -95,8 +95,8 @@ namespace ConsoleApp4
             }
             public void nachinaiyopta()
             {
-                ConsoleKeyInfo nazhimai;
-                proverka = true;
+                ConsoleKeyInfo nazhimai;// подкл кнопку
+                proverka = true;// чтобы программа закрывалась при нажатии пробела
                 while (proverka)// по кнопкам
                 {
                     Calc();
@@ -116,14 +116,14 @@ namespace ConsoleApp4
                     }
                     else if (nazhimai.Key == ConsoleKey.Enter)
                     {
-                        if (faily.GetType() == typeof(DirectoryInfo))
+                        if (faily.GetType() == typeof(DirectoryInfo))//если папка, то при нажатии интер откроется
                         {
                             cursor = 0;
                             path = faily.FullName;
                         }
                         else
                         {
-                            StreamReader sr = new StreamReader(faily.FullName);
+                            StreamReader sr = new StreamReader(faily.FullName);//пусть покажет содержимое если это файл
                             Console.WriteLine(sr.ReadToEnd());
                             sr.Close();
                             Console.ReadKey();
@@ -132,7 +132,7 @@ namespace ConsoleApp4
                     }
                     else if (nazhimai.Key == ConsoleKey.Escape)
                     {
-                        if (papki.Parent.FullName != @"C:\")
+                        if (papki.Parent.FullName != @"C:\")//пока до канца не дойдет может выходить при искейп
                         {
                             path = papki.Parent.FullName;
                             cursor = 0;
@@ -140,14 +140,14 @@ namespace ConsoleApp4
                         else
                         {
                             Console.Clear();
-                            Console.WriteLine("You can not go out of the Disk");
+                            Console.WriteLine("You can not go out of the Disk");//иначе выйдет такое предложение
                             Console.ReadKey();
 
                         }
                     }
                     else if (nazhimai.Key == ConsoleKey.Backspace)
                     {
-                        if (faily.GetType() == typeof(DirectoryInfo))
+                        if (faily.GetType() == typeof(DirectoryInfo))//если папка то удаляем ее и все содержимое
                         {
                             cursor = 0;
                             Directory.Delete(faily.FullName);
@@ -155,18 +155,18 @@ namespace ConsoleApp4
                         else
                         {
                             cursor = 0;
-                            File.Delete(faily.FullName);
+                            File.Delete(faily.FullName);//если папка то удаляем
                         }
                     }
-                    else if (nazhimai.Key == ConsoleKey.Tab)
+                    else if (nazhimai.Key == ConsoleKey.Tab)//кнопка для переименования папки или файла
                     {
                         Console.Clear();
-                        string nazovi = Console.ReadLine();
+                        string nazovi = Console.ReadLine();//новое название
                         Console.Clear();
-                        string novoe = Path.Combine(faily.FullName, nazovi);
+                        string novoe = Path.Combine(faily.FullName, nazovi);//новый путь к переименованному файлу или папки
                         if (faily.GetType() == typeof(DirectoryInfo))
                         {
-                            Directory.Move(faily.FullName, novoe);
+                            Directory.Move(faily.FullName, novoe);//перенести
                         }
                         else
                         {
