@@ -51,7 +51,8 @@ namespace ConsoleApp4
                 FileSystemInfo[] faily = papki.GetFileSystemInfos();//массив с файлами и папками
                 Console.BackgroundColor = ConsoleColor.DarkRed;// перекрашиваю общ фон 
                 Console.Clear();// меняю каартинку
-                for (int i = 0, k = 0; i < faily.Length; i++)
+
+                /*for (int i = 0, k = 0; i < faily.Length; i++)
                 {
                     if (faily[i].Name[0] == '.')
                     {
@@ -63,7 +64,33 @@ namespace ConsoleApp4
                     
                     k++;
                 }
-                
+                */
+                var folders = papki.GetDirectories();
+                var file = papki.GetFiles();
+
+                int j = 0;
+                foreach(var u in folders)
+                {
+                    if (u.Name.StartsWith("."))
+                    {
+                        continue;
+                    }
+                    Cvet(u, j);
+                    j++;
+                    Console.WriteLine(j + ". " + u.Name);
+                }
+                int ups = j;
+                foreach(var l in file)
+                {
+                    if (l.Name.StartsWith("."))
+                    {
+                        continue;
+                    }
+                    Cvet(l, ups);
+                    ups++;
+                    Console.WriteLine(ups + ". " + l.Name);
+                }
+               
             }
             public void Calc()
             {
@@ -166,7 +193,7 @@ namespace ConsoleApp4
                         Console.Clear();
                         string nazovi = Console.ReadLine();//новое название
                         Console.Clear();
-                        string novoe = Path.Combine(faily.FullName, nazovi);//новый путь к переименованному файлу или папки
+                        string novoe = Path.Combine(papki.FullName, nazovi);//новый путь к переименованному файлу или папки
                         if (faily.GetType() == typeof(DirectoryInfo))
                         {
                             Directory.Move(faily.FullName, novoe);//перенести
