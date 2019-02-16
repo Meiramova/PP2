@@ -11,14 +11,14 @@ namespace ConsoleApp4
     {
         class FarManager
         {
-            public DirectoryInfo papki = null;
+            public DirectoryInfo papki = null;// создаю переменные
             public FileSystemInfo faily = null;
             public string path;
             public bool proverka;
             public int cursor;
             public int razmer;
 
-            public FarManager(string path)
+            public FarManager(string path)//конструктор
             {
                 cursor = 0;
                 this.path = path;
@@ -26,7 +26,7 @@ namespace ConsoleApp4
 
             public void Cvet(FileSystemInfo massive, int index)
             {
-
+                // меняю цвета
                 if (cursor == index)
                 {
                     Console.ForegroundColor = ConsoleColor.Black;
@@ -47,31 +47,31 @@ namespace ConsoleApp4
             }
             public void Pokazhi()
             {
-                papki = new DirectoryInfo(path);
-                FileSystemInfo[] faily = papki.GetFileSystemInfos();
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.Clear();
+                papki = new DirectoryInfo(path); // папки
+                FileSystemInfo[] faily = papki.GetFileSystemInfos();//массив с файлами и папками
+                Console.BackgroundColor = ConsoleColor.DarkRed;// перекрашиваю общ фон 
+                Console.Clear();// меняю каартинку
                 for (int i = 0, k = 0; i < faily.Length; i++)
                 {
                     if (faily[i].Name[0] == '.')
                     {
-                        continue;
+                        continue;// скрытые файлы игнорирует
                     }
-                    Cvet(faily[i], k);
-                    Console.WriteLine(k + 1 + ". " + faily[i].Name);
+                    Cvet(faily[i], k);// вызываю функц цвета
+                    Console.WriteLine(k + 1 + ". " + faily[i].Name);// выводит названия и счет
                     k++;
                 }
             }
             public void Calc()
             {
-                DirectoryInfo papki = new DirectoryInfo(path);
-                FileSystemInfo[] faily = papki.GetFileSystemInfos();
-                razmer = faily.Length;
+                DirectoryInfo papki = new DirectoryInfo(path);// папки
+                FileSystemInfo[] faily = papki.GetFileSystemInfos();// массив всего 
+                razmer = faily.Length;//размерность присваиваем
                 for (int i = 0; i < faily.Length; i++)
                 {
                     if (faily[i].Name[0] == '.')
                     {
-                        razmer--;
+                        razmer--;// изменяем размерность 
                     }
                 }
             }
@@ -97,7 +97,7 @@ namespace ConsoleApp4
             {
                 ConsoleKeyInfo nazhimai;
                 proverka = true;
-                while (proverka)
+                while (proverka)// по кнопкам
                 {
                     Calc();
                     Pokazhi();
