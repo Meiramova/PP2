@@ -30,7 +30,7 @@ namespace ConsoleApp4
                 if (cursor == index)
                 {
                     Console.ForegroundColor = ConsoleColor.Black;
-                    Console.BackgroundColor = ConsoleColor.DarkRed;
+                    Console.BackgroundColor = ConsoleColor.White;
                     faily = massive;
                 }
                 else if (massive.GetType() == typeof(DirectoryInfo))
@@ -58,9 +58,12 @@ namespace ConsoleApp4
                         continue;// скрытые файлы игнорирует
                     }
                     Cvet(faily[i], k);// вызываю функц цвета
+                   
                     Console.WriteLine(k + 1 + ". " + faily[i].Name);// выводит названия и счет
+                    
                     k++;
                 }
+                
             }
             public void Calc()
             {
