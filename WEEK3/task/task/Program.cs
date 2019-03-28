@@ -49,7 +49,7 @@ namespace ConsoleApp4
             {
                 papki = new DirectoryInfo(path); // папки
                 FileSystemInfo[] faily = papki.GetFileSystemInfos();//массив с файлами и папками
-                Console.BackgroundColor = ConsoleColor.DarkRed;// перекрашиваю общ фон 
+                Console.BackgroundColor = ConsoleColor.DarkMagenta;// перекрашиваю общ фон 
                 Console.Clear();// меняю каартинку
 
                 /*for (int i = 0, k = 0; i < faily.Length; i++)
