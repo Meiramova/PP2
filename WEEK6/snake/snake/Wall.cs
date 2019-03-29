@@ -16,46 +16,35 @@ namespace snake
         }
 
         GameLevel gameLevel = GameLevel.FIRST;
-        public Wall(char sign, ConsoleColor color) : base(0,0, sign, color)
+
+        public Wall(char sign, ConsoleColor color) : base(0, 0, sign, color)
         {
             body = new List<Point>();
         }
+
         public void LoadLevel()
         {
             body = new List<Point>();
-            string fileName = "Level1.txt";
-            if(gameLevel == GameLevel.SECOND)
-            {
-                fileName = "Level2.txt";
-            }
-            else if( gameLevel == GameLevel.THIRD)
-            {
-                fileName = "Level3.txt";
-            }
+            string fileName = "l1.txt";
+            if (gameLevel == GameLevel.SECOND)
+                fileName = "l2.txt";
+            if (gameLevel == GameLevel.THIRD)
+                fileName = "l3.txt";
+
             StreamReader sr = new StreamReader(fileName);
             string[] rows = sr.ReadToEnd().Split('\n');
-            for(int i = 0; i < rows.Length; i++)
-            {
-                for(int j = 0; j < rows[i].Length; j++)
-                {
-                    if(rows[i][j] == '#')
-                    {
+            for (int i = 0; i < rows.Length; i++)
+                for (int j = 0; j < rows[i].Length; j++)
+                    if (rows[i][j] == '*')
                         body.Add(new Point(j, i));
-                    }
-                }
-            }
         }
 
         public void NextLevel()
         {
-            if(gameLevel == GameLevel.FIRST)
-            {
+            if (gameLevel == GameLevel.FIRST)
                 gameLevel = GameLevel.SECOND;
-            }
-            else if( gameLevel == GameLevel.SECOND)
-            {
+            else if (gameLevel == GameLevel.SECOND)
                 gameLevel = GameLevel.THIRD;
-            }
             LoadLevel();
         }
     }
