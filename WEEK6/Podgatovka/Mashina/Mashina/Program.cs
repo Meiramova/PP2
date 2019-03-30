@@ -39,7 +39,7 @@ namespace Mashina
                     if (wall != null && rows[i][j] == '*')
                         wall.Add(new body(j, i));
 
-            for (int i = wall.Count; i > 0; i--)
+            for (int i = wall.Count - 1; i > 0; i--)
             {
                 Console.Write('*');
             }

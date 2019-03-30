@@ -54,25 +54,30 @@ namespace Pushka
 
         public static void Bullet()
         {
+            ConsoleKeyInfo cf = new ConsoleKeyInfo();
             while (true)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.CursorVisible = false;
-                Console.SetCursorPosition(i, 0);
-                Console.WriteLine("===");
-                Console.SetCursorPosition(i, 1);
-                Console.WriteLine("====");
-                Console.SetCursorPosition(i - 1, 0);
-                Console.WriteLine(" ");
-                Console.SetCursorPosition(i - 1, 1);
-                Console.WriteLine(" ");
-                Console.SetCursorPosition(i, 2);
-                Console.WriteLine("===");
-                Console.SetCursorPosition(i - 1, 2);
-                Console.WriteLine(" ");
+                cf = Console.ReadKey();
+                if (cf.Key == ConsoleKey.Spacebar)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.CursorVisible = false;
+                    Console.SetCursorPosition(i, 0);
+                    Console.WriteLine("===");
+                    Console.SetCursorPosition(i, 1);
+                    Console.WriteLine("====");
+                    Console.SetCursorPosition(i - 1, 0);
+                    Console.WriteLine(" ");
+                    Console.SetCursorPosition(i - 1, 1);
+                    Console.WriteLine(" ");
+                    Console.SetCursorPosition(i, 2);
+                    Console.WriteLine("===");
+                    Console.SetCursorPosition(i - 1, 2);
+                    Console.WriteLine(" ");
 
-                i++;
-                Thread.Sleep(100);
+                    i++;
+                }
+                    Thread.Sleep(100);
             }
         }
     }
